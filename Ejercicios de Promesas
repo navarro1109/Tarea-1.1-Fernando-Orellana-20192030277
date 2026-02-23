@@ -1,0 +1,171 @@
+// ============================================================
+// Tarea 1.1 - Fernando Orellana - 20192030277 - Diseño Digital
+
+// Los ejercicios fueron realizados en VScode y pegados en gitHub con motivo de cumplir con los requisitos de la tares
+// // ============================================================
+
+// 1. Agrupar elementos por propiedad
+function agruparPorPropiedad(arreglo, propiedad) {
+  return arreglo.reduce((acumulador, elemento) => {
+    const clave = elemento[propiedad];
+    if (!acumulador[clave]) {
+      acumulador[clave] = [];
+    }
+    acumulador[clave].push(elemento);
+    return acumulador;
+  }, {});
+}
+
+const datos = [
+  { categoria: 'fruta', nombre: 'manzana' },
+  { categoria: 'verdura', nombre: 'zanahoria' },
+  { categoria: 'fruta', nombre: 'banana' },
+  { categoria: 'verdura', nombre: 'lechuga' }
+];
+
+console.log('--agrupar por propiedad ---');
+console.log(agruparPorPropiedad(datos, 'categoria'));
+
+
+// 2. Promesas encadenadas
+function obtenerUsuario(id) {
+  const usuarios = {
+    1: { id: 1, nombre: 'Juan' },
+    2: { id: 2, nombre: 'María' }
+  };
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(usuarios[id]);
+    }, 500);
+  });
+}
+
+console.log('\n--promesas encadenadas ---');
+obtenerUsuario(1)
+  .then((usuario1) => {
+    return obtenerUsuario(2).then((usuario2) => {
+      console.log(`Usuarios cargados: ${usuario1.nombre} y ${usuario2.nombre}`);
+    });
+  });
+
+
+// 3. Calcular promedio ponderado
+function promedioPonderado(notas) {
+  return notas.reduce((suma, nota) => suma + nota.valor * nota.peso, 0);
+}
+
+const notas = [
+  { valor: 90, peso: 0.5 },
+  { valor: 80, peso: 0.3 },
+  { valor: 70, peso: 0.2 }
+];
+
+console.log('\n--promedio ponderado ---');
+console.log(promedioPonderado(notas)); // 83
+
+
+// 4. Copiar y modificar objetos
+function modificarPersona(persona, nuevoNombre) {
+  return { ...persona, nombre: nuevoNombre, edad: persona.edad + 1 };
+}
+
+const persona = { nombre: 'Luis', edad: 30 };
+const nuevaPersona = modificarPersona(persona, 'Carlos');
+
+console.log('\n--- Ejercicio 4: Copiar y modificar objetos ---');
+console.log('Original:', persona);       // { nombre: 'Luis', edad: 30 }
+console.log('Modificado:', nuevaPersona); // { nombre: 'Carlos', edad: 31 }
+
+
+// 5. Eliminar duplicados por propiedad
+function eliminarDuplicados(arreglo, propiedad) {
+  const vistos = new Set();
+  return arreglo.filter((elemento) => {
+    const valor = elemento[propiedad];
+    if (vistos.has(valor)) return false;
+    vistos.add(valor);
+    return true;
+  });
+}
+
+const elementos = [
+  { id: 1, nombre: 'A' },
+  { id: 2, nombre: 'B' },
+  { id: 1, nombre: 'A' }
+];
+
+console.log('\n---eliminar duplicados ---');
+console.log(eliminarDuplicados(elementos, 'id'));
+// [{ id: 1, nombre: 'A' }, { id: 2, nombre: 'B' }]
+
+
+// 6. Combinar dos listas sin repetir elementos
+function combinarListasSinRepetir(lista1, lista2) {
+  return [...new Set([...lista1, ...lista2])];
+}
+
+const lista1 = ['manzana', 'pera', 'banana'];
+const lista2 = ['pera', 'uva', 'manzana', 'sandía'];
+
+console.log('\n--cmbinar listas sin repetir ---');
+console.log(combinarListasSinRepetir(lista1, lista2));
+// ['manzana', 'pera', 'banana', 'uva', 'sandía']
+
+
+// 7. Contar cuántas veces aparece cada elemento
+function contarPalabras(palabras) {
+  return palabras.reduce((conteo, palabra) => {
+    conteo[palabra] = (conteo[palabra] || 0) + 1;
+    return conteo;
+  }, {});
+}
+
+const palabras = ['hola', 'adiós', 'hola', 'gracias', 'hola', 'gracias'];
+
+console.log('\n--cntar palabras ---');
+console.log(contarPalabras(palabras));
+// { hola: 3, adiós: 1, gracias: 2 }
+
+
+// 8. Filtrar objetos por múltiples condiciones
+function filtrarDisponibles(productos, categoria) {
+  return productos.filter(
+    (producto) => producto.categoria === categoria && producto.stock > 0
+  );
+}
+
+const productos = [
+  { nombre: 'Camisa', categoria: 'ropa', stock: 10 },
+  { nombre: 'Pantalón', categoria: 'ropa', stock: 0 },
+  { nombre: 'Televisor', categoria: 'electrónica', stock: 5 }
+];
+
+console.log('\n--filtrar por categoría y stock ---');
+console.log(filtrarDisponibles(productos, 'ropa'));
+// [{ nombre: 'Camisa', categoria: 'ropa', stock: 10 }]
+
+
+// 9. Simular carga con promesa y setTimeout
+function cargarDatos() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve('Datos cargados correctamente');
+    }, 2000);
+  });
+}
+
+console.log('\n--- Ejercicio 9: Simular carga con setTimeout ---');
+cargarDatos().then((mensaje) => {
+  console.log(mensaje); // (después de 2 segundos) "Datos cargados correctamente"
+});
+
+
+// 10. Verificar si todos los elementos cumplen una condición
+function verificarMayoresDeEdad(edades) {
+  return edades.every((edad) => edad >= 18);
+}
+
+const edades = [19, 25, 32, 17];
+
+console.log('\n--mayores de edad ---');
+console.log(verificarMayoresDeEdad(edades)); // false
