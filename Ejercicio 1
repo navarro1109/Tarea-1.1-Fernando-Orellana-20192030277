@@ -1,0 +1,11 @@
+// 1. Agrupar elementos por propiedad
+function agruparPorPropiedad(arreglo, propiedad) {
+  return arreglo.reduce((acumulador, elemento) => {
+    const clave = elemento[propiedad];
+    if (!acumulador[clave]) {
+      acumulador[clave] = [];
+    }
+    acumulador[clave].push(elemento);
+    return acumulador;
+  }, {});
+}
